@@ -1,4 +1,4 @@
-'use strict';
+const createBot = require('../smooch/bot').createBot;
 
 const firstEntityValue = (entities, entity) => {
   const val = entities && entities[entity] &&
@@ -12,13 +12,19 @@ const firstEntityValue = (entities, entity) => {
   return typeof val === 'object' ? val.value : val;
 };
 
-// actions
 const actions = {
-  send(request, response, res) {
+  send(request, response, res, appUser) {
     const {sessionId, context, entities} = request;
     const {text, quickreplies} = response;
     return new Promise(function(resolve, reject) {
-      res.json(response);
+      // Instantiate the smooch bot and respond with the result.
+      createBot(appUser).say(text)
+         .then(() => res.end())
+         .catch((err) => {
+           console.error('SmoochBot error:', err);
+           console.error(err.stack);
+           res.end();
+         });
       return resolve();
     });
   },

@@ -1,11 +1,12 @@
 'use strict';
 
 const jsonwebtoken = require('jsonwebtoken');
+const config = require('../../config');
 const jwt = jsonwebtoken.sign({
   scope: 'app'
-}, process.env.SMOOCH_SECRET, {
+}, config.smoochSecret, {
   headers: {
-    kid: process.env.SMOOCH_KEY_ID
+    kid: config.smoochKeyId
   }
 });
 

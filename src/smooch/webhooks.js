@@ -2,8 +2,8 @@
 
 const SmoochCore = require('smooch-core');
 const webhookTriggers = ['message:appUser', 'postback'];
-const jwt = require('../jwt');
-const config = require ('../config');
+const jwt = require('./jwt');
+const config = require ('../../config');
 
 function createWebhook(smoochCore, target) {
   return smoochCore.webhooks.create({
@@ -33,25 +33,29 @@ function updateWebhook(smoochCore, existingWebhook) {
 }
 
 // Create a webhook if one doesn't already exist
-if (config.serviceUrl) {
-  const target = config.serviceUrl.replace(/\/$/, '') + '/webhook';
-  const smoochCore = new SmoochCore({
-    jwt
-  });
-  smoochCore.webhooks.list()
-  .then((res) => {
-    const existingWebhook = res.webhooks.find((w) => w.target === target);
-
-    if (!existingWebhook) {
-      return createWebhook(smoochCore, target);
-    }
-
-    const hasAllTriggers = webhookTriggers.every((t) => {
-      return existingWebhook.triggers.indexOf(t) !== -1;
+function deployWebhook() {
+  if (config.serviceUrl) {
+    const target = config.serviceUrl.replace(/\/$/, '') + '/webhook';
+    const smoochCore = new SmoochCore({
+      jwt
     });
+    smoochCore.webhooks.list()
+    .then((res) => {
+      const existingWebhook = res.webhooks.find((w) => w.target === target);
 
-    if (!hasAllTriggers) {
-      updateWebhook(smoochCore, existingWebhook);
-    }
-  });
+      if (!existingWebhook) {
+        return createWebhook(smoochCore, target);
+      }
+
+      const hasAllTriggers = webhookTriggers.every((t) => {
+        return existingWebhook.triggers.indexOf(t) !== -1;
+      });
+
+      if (!hasAllTriggers) {
+        updateWebhook(smoochCore, existingWebhook);
+      }
+    });
+  }
 }
+
+module.exports = { deployWebhook };
