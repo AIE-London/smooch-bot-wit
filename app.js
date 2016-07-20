@@ -31,7 +31,7 @@ const SmoochApiBot = smoochBot.SmoochApiBot;
 const SmoochCore = require('smooch-core');
 const jwt = require('./jwt');
 
-const name = 'Loyalty Bot';
+const name = process.env.BOT_NAME || 'Smooch Bot';
 const avatarUrl = 'https://s.gravatar.com/avatar/f91b04087e0125153623a3778e819c0a?s=80';
 const store = new SmoochApiStore({
   jwt
@@ -108,7 +108,7 @@ const actions = {
 const wit = new Wit({
   accessToken: WIT_TOKEN,
   actions,
-  //logger: new log.Logger(log.DEBUG)
+  logger: new log.Logger(log.DEBUG)
 });
 
 const sessions = {};
