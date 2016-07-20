@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
 const request = require('request');
+const config = require('./config');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -12,7 +13,7 @@ app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
   res.render('index', {
-    appToken: process.env.SMOOCH_APP_TOKEN
+    appToken: config.smoochToken,
   });
 });
 
@@ -31,8 +32,8 @@ const SmoochApiBot = smoochBot.SmoochApiBot;
 const SmoochCore = require('smooch-core');
 const jwt = require('./jwt');
 
-const name = process.env.BOT_NAME || 'Smooch Bot';
-const avatarUrl = 'https://s.gravatar.com/avatar/f91b04087e0125153623a3778e819c0a?s=80';
+const name = config.smoochBotName;
+const avatarUrl = config.smoochAvatarUrl;
 const store = new SmoochApiStore({
   jwt
 });
@@ -57,7 +58,7 @@ function createBot(appUser) {
 // sessionId -> {userId: userId, context: sessionState}
 
 // Wit.ai parameters
-const WIT_TOKEN = process.env.WIT_TOKEN;
+const WIT_TOKEN = config.witToken;
 
 // setup wit actions
 const firstEntityValue = (entities, entity) => {
@@ -108,7 +109,7 @@ const actions = {
 const wit = new Wit({
   accessToken: WIT_TOKEN,
   actions,
-  logger: new log.Logger(log.DEBUG)
+  logger: new log.Logger(config.witLogLevel)
 });
 
 const sessions = {};
@@ -196,9 +197,6 @@ function handlePostback(req, res) {
     .then(() => res.end());
 }
 
-// Webserver parameter
-const PORT = process.env.VCAP_APP_PORT || 8445;
-
 // Starting our webserver and putting it all together
 app.use(({method, url}, rsp, next) => {
   rsp.on('finish', () => {
@@ -226,5 +224,6 @@ app.post('/webhook', (req, res) => {
   }
 });
 
+const PORT = config.port;
 app.listen(PORT);
 console.log('Listening on :' + PORT + '...');

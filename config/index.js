@@ -10,7 +10,7 @@ const config = {
   witLogLevel: process.env.WIT_LOG_LEVEL || 'debug',
   // General settings
   serviceUrl: process.env.SERVICE_URL, // used to create the webhook in smooch.io
-  port: process.env.PORT || 8000,
+  port: process.env.PORT || 8445,
 };
 
-export default config;
+module.exports = config;
