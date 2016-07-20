@@ -36,6 +36,12 @@ app.use(bodyParser.json());
 
 // Webhook handler
 app.post('/webhook', (req, res) => {
+  // really basic security check on the webhook.
+  if (!req.get('x-api-key')) {
+    res.status(401).end();
+    return;
+  }
+
   const trigger = req.body.trigger;
 
   switch (trigger) {
