@@ -58,6 +58,8 @@ To test the app either visit the ngrok.io URL or http://localhost:8445 (the defa
 
         $ heroku config:set SERVICE_URL=https://foo-bar-4242.herokuapp.com -a foo-bar-4242
 
+1. You may need to restart your application for the webhook to be registered.
+
 1. You should be all set. Open your Heroku app and start chatting with your new bot!
 
 # Troubleshooting your bot
