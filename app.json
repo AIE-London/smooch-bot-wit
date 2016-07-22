@@ -1,9 +1,9 @@
 {
-  "name": "Smooch Bot Example App",
-  "description": "Smooch Bot example using Express",
-  "keywords": ["smooch", "bot", "express"],
+  "name": "Smooch Bot + Wit.AI App",
+  "description": "Smooch Bot example using Express integrating with Wit.AI",
+  "keywords": ["smooch", "bot", "express", "wit", "ai"],
   "website": "https://smooch.io",
-  "repository": "https://github.com/smooch/smooch-bot-example",
+  "repository": "https://github.com/Capgemini-AIE/smooch-bot-wit",
   "logo": "https://node-js-sample.herokuapp.com/node.png",
   "env": {
     "SMOOCH_APP_TOKEN": {
@@ -16,6 +16,10 @@
     },
     "SMOOCH_SECRET": {
       "description": "Your Smooch secret, used to talk to the Smooch API",
+      "required": true
+    },
+    "WIT_TOKEN": {
+      "description": "Your Wit.AI API Token",
       "required": true
     }
   }
