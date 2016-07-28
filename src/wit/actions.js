@@ -28,19 +28,6 @@ const actions = {
       return resolve();
     });
   },
-  getForecast({context, entities}) {
-    return new Promise(function(resolve, reject) {
-      var location = firstEntityValue(entities, 'location');
-      if (location) {
-        context.forecast = 'sunny in ' + location; // we should call a weather API here
-        delete context.missingLocation;
-      } else {
-        context.missingLocation = true;
-        delete context.forecast;
-      }
-      return resolve(context);
-    });
-  },
   getSizeColour({context, entities}) {
     return new Promise(function(resolve, reject) {
       console.log(entities);
@@ -64,7 +51,7 @@ const actions = {
       if (!context.colour && !colour) {
         context.missingColour = true;
       }
-
+      // We should call retail shop api to search for clothes (Amazon API)
       return resolve(context);
     });
   },
@@ -72,7 +59,7 @@ const actions = {
     return new Promise(function(resolve, reject) {
       var location = firstEntityValue(entities, 'location');
       var datetime = firstEntityValue(entities, 'datetime');
-      var clothes = firstEntityValue(entities, 'clothes');
+      var clotheType = firstEntityValue(entities, 'clotheType');
 
       if (location) {
         context.location = location;
@@ -82,8 +69,8 @@ const actions = {
         context.datetime = datetime;
         delete context.missingDatetime;
       }
-      if (clothes) {
-        context.clothes = clothes;
+      if (clotheType) {
+        context.clotheType = clotheType;
         delete context.missingClothesType;
       }
 
@@ -93,11 +80,11 @@ const actions = {
       if (!context.datetime && !datetime) {
         context.missingDatetime = true;
       }
-      if (!context.clothes && !clothes) {
+      if (!context.clotheType && !clotheType) {
         context.missingClothesType = true;
       }
 
-      if (location && datetime && clothes) {
+      if (location && datetime && clotheType) {
         delete context.missingLocation;
         delete context.missingClothesType;
         delete context.missingDatetime;
