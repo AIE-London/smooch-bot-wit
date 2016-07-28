@@ -41,20 +41,34 @@ const actions = {
       return resolve(context);
     });
   },
-  getSize({context, entities}) {
+  getSizeColour({context, entities}) {
     return new Promise(function(resolve, reject) {
       console.log(entities);
       var size = firstEntityValue(entities, 'size');
+      var colour = firstEntityValue(entities, 'colour');
+
       if (size) {
         context.size = size;
         delete context.missingSize;
-      } else {
+      }
+
+      if (!context.size && !size) {
         context.missingSize = true;
       }
+
+      if (colour) {
+        context.colour = colour;
+        delete context.missingColour;
+      }
+
+      if (!context.colour && !colour) {
+        context.missingColour = true;
+      }
+
       return resolve(context);
     });
   },
-  getSizeColourStyle({context, entities}) {
+  getLocationDateClothes({context, entities}) {
     return new Promise(function(resolve, reject) {
       var location = firstEntityValue(entities, 'location');
       var datetime = firstEntityValue(entities, 'datetime');
@@ -68,7 +82,7 @@ const actions = {
         context.datetime = datetime;
         delete context.missingDatetime;
       }
-      if (clothes!=null && clothes!='omission_value') {
+      if (clothes) {
         context.clothes = clothes;
         delete context.missingClothesType;
       }
