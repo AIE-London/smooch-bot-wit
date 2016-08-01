@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 // Default handler for the web page.
 app.get('/', function(req, res) {
   res.render('index', {
-    appToken: config.smoochToken,
+    appToken: config.smoochToken
   });
 });
 
