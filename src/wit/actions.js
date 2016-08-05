@@ -37,20 +37,19 @@ const actions = {
       if (size) {
         context.size = size;
         delete context.missingSize;
-      }
-
-      if (!context.size && !size) {
-        context.missingSize = true;
+      } else {
+	      context.missingSize = true;
+	      delete context.size;
       }
 
       if (colour) {
         context.colour = colour;
         delete context.missingColour;
-      }
-
-      if (!context.colour && !colour) {
+      } else {
         context.missingColour = true;
+	     delete context.colour;
       }
+      
       // We should call retail shop api to search for clothes (Amazon API)
       return resolve(context);
     });
