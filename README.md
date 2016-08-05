@@ -9,10 +9,13 @@ A [Smooch](https://app.smooch.io/signup) bot that integrates with [Wit.ai](https
 1. With a new Smooch app created, go to the settings tab and take note of your App Token. Also, generate a new Secret Key, and take note of the key ID and secret.
 
 1. Sign up for an account at [wit.ai](https://wit.ai)
+2. Log in -> Click on the app you want to use (a new one or a shared app) -> Click settings -> Make a note of your `Server Access Token`. This will be needed to populate: `set WIT_TOKEN=`
 
 ## Getting started
 
-To install dependencies:
+1. Install Node.js including npm
+
+2. To install dependencies, open a console or Windows command prompt change to the directory containing the checked out code (e.g. D:\workspace\smooch-bot-wit) and run:
 
 ```
 $ npm install
@@ -29,15 +32,30 @@ up and configure it. To set up the tunnel you will need to run the following:
 ngrok http 8445
 ```
 
-This will create an ngrok.io URL for you to use to set the following environment variables:
+This will create an ngrok.io URL (e.g. http://6a72fa86.ngrok.io)
 
+You will need to set the following environment variables:
 
+#Mac/Linux
 ```
 export SMOOCH_APP_TOKEN=xxxx
 export SMOOCH_KEY_ID=xxxx
 export SMOOCH_SECRET=xxxx
 export WIT_TOKEN=xxxx
-export SERVICE_URL=http://6a72fa86.ngrok.io
+export SERVICE_URL=http://xxxxxxxx.ngrok.io
+```
+#Windows
+
+Environment variables will need to be permenantly set through Computer -> Sytem Properties -> Advanced System settings -> Environment Variables...
+
+Or the below commands in a command prompt will set them up for the environment session only:
+
+```
+set SMOOCH_APP_TOKEN=xxxx
+set SMOOCH_KEY_ID=xxxx
+set SMOOCH_SECRET=xxxx
+set WIT_TOKEN=xxxx
+set SERVICE_URL=http://xxxxxxxx.ngrok.io
 ```
 
 Start the app:
@@ -46,7 +64,7 @@ Start the app:
 $ npm start
 ```
 
-To test the app either visit the ngrok.io URL or http://localhost:8445 (the default port).
+To test the app either visit the ngrok.io URL (http://xxxxxxxx.ngrok.io) or http://localhost:8445 (the default port).
 
 ## Deploying to Heroku
 
